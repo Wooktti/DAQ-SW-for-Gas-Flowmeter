@@ -29,13 +29,15 @@ void print_value_to_serial(unsigned long time) {
   temp_2_degC = tc2.readTempC(); // degC
 
   // Print in CSV format into the serial.
-  byte buf[24] = {0};
-  memcpy(buf, &time, 4);
-  memcpy(buf + 4, &press1_bar, 4);
-  memcpy(buf + 8, &press2_bar, 4);
-  memcpy(buf + 12, &FM_g_per_s, 4);
-  memcpy(buf + 16, &temp_1_degC, 4);
-  memcpy(buf + 20, &temp_2_degC, 4);
-  
-  Serial.write(buf, 24);
+  Serial.print(time);
+  Serial.print(",");
+  Serial.print(press1_bar);
+  Serial.print(",");
+  Serial.print(press2_bar);
+  Serial.print(",");
+  Serial.print(FM_g_per_s);
+  Serial.print(",");
+  Serial.print(temp_1_degC);
+  Serial.print(",");
+  Serial.println(temp_2_degC);
 }
