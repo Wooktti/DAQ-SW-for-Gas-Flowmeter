@@ -16,7 +16,8 @@ This S/W is based on [Real-Time-Serial-Plotter](https://github.com/KAIST-THRUST/
 ## Installation
 
 1. Clone or download this repository to your local machine.
-2. Install the required Python packages if they are not installed 
+2. Install PlatformIO extension via VSCode.
+3. Install the required Python packages if they are not installed 
 in your local computer.
 
 ```bash
