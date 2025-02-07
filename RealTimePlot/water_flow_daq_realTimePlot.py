@@ -126,7 +126,7 @@ class RealTimePlot(QObject):
 
         # Open the serial port
         self._ser = serial.Serial(port, baud_rate)
-        self._data_packet = bytearray(24)
+        self._data_packet = bytearray(8)
 
         # Create the PyQtGraph window
         self._win = pg.GraphicsLayoutWidget(show=True)
@@ -232,14 +232,10 @@ class RealTimePlot(QObject):
                 self._ser.readinto(self._data_packet)
                 # print(self._data_packet)
                 timeStamp = struct.unpack('I', self._data_packet[0:4])[0] # unit: ms
-                press1Bar = struct.unpack('f', self._data_packet[4:8])[0] # unit: bar
-                press2Bar = struct.unpack('f', self._data_packet[8:12])[0] # unit: bar
-                fm_gps = struct.unpack('f', self._data_packet[12:16])[0] # unit: g/s
-                temp1C = struct.unpack('f', self._data_packet[16:20])[0] # unit: degC
-                temp2C = struct.unpack('f', self._data_packet[20:24])[0] # unit: degC
+                fm_slm = struct.unpack('f', self._data_packet[4:8])[0] # unit: slm
 
                 # values = line.decode().strip().split(sep)
-                raw_data = [timeStamp, press1Bar, press2Bar, fm_gps, temp1C, temp2C]
+                raw_data = [timeStamp, fm_slm]
                 if self._time_from_serial:
                     data = raw_data[0], raw_data[1:]
                 else:
@@ -281,11 +277,7 @@ if __name__ == "__main__":
     # Modify the parameters of the `RealtimePlot` to fit your project.
     datas = [
         "time (ms)",
-        "PT1 (barg)",
-        "PT2 (barg)",
-        "FM (g/s)",
-        "TC1 (degC)",
-        "TC2 (degC)",
+        "FM (slm)",
     ]  # list of datas.
     plotter = RealTimePlot(data_set=datas, port="/dev/tty.usbmodem146659901", update_rate=25, sensor_rate=10)
     plotter.run()
